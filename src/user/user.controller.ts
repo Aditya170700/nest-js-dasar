@@ -61,6 +61,14 @@ export class UserController {
     return request.cookies['name'];
   }
 
+  @Get('/view')
+  view(@Query('name') name: string, @Res() response: Response) {
+    response.render('index.html', {
+      title: 'Template Engine',
+      name: name
+    });
+  }
+
   @Get("/:id")
   getById(@Param('id') id: string): string {
     return `GET ${id}`;
