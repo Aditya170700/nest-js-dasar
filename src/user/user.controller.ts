@@ -1,4 +1,16 @@
-import { Controller, Get, Param, Post, Query, Header, HttpCode, Redirect, HttpRedirectResponse } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Header,
+  HttpCode,
+  Redirect,
+  HttpRedirectResponse,
+  Res, Req,
+} from '@nestjs/common';
+import { Response, Request } from 'express';
 
 @Controller('/api/users')
 export class UserController {
@@ -36,6 +48,17 @@ export class UserController {
       url: '/api/users/hello?first_name=Aditya&last_name=Ricki',
       statusCode: 200
     };
+  }
+
+  @Get('/set-cookie')
+  setCookie(@Query('name') name: string, @Res() response: Response) {
+    response.cookie('name', name);
+    response.status(200).send('Success Set Cookie');
+  }
+
+  @Get('/get-cookie')
+  getCookie(@Req() request: Request) {
+    return request.cookies['name'];
   }
 
   @Get("/:id")
