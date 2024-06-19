@@ -13,16 +13,19 @@ import {
 import { Response, Request } from 'express';
 import { UserService } from './user.service';
 import { Connection } from './connection/connection';
+import { MailService } from './mail/mail.service';
 
 @Controller('/api/users')
 export class UserController {
   constructor(
     private service: UserService,
-    private connection: Connection
+    private connection: Connection,
+    private mailService: MailService,
   ) {}
 
   @Get("/connection")
   async getConnection(): Promise<string> {
+    this.mailService.send();
     return this.connection.getName();
   }
 
