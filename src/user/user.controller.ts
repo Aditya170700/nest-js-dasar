@@ -16,6 +16,7 @@ import { Connection } from './connection/connection';
 import { MailService } from './mail/mail.service';
 import { UserRepository } from './user-repository/user-repository';
 import { MemberService } from './member/member.service';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('/api/users')
 export class UserController {
@@ -26,6 +27,7 @@ export class UserController {
     private userRepository: UserRepository,
     @Inject('EmailService') private emailService: MailService,
     private memberService: MemberService,
+    private configService: ConfigService,
   ) {}
 
   @Get("/connection")
@@ -35,6 +37,7 @@ export class UserController {
     this.emailService.send();
     console.log(this.memberService.getConnectionName());
     this.memberService.sendEmail();
+    console.log(this.configService.get('APP_NAME'));
     return this.connection.getName();
   }
 
