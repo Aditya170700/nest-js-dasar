@@ -11,9 +11,19 @@ import {
   Res, Req,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
+import { UserService } from './user.service';
 
 @Controller('/api/users')
 export class UserController {
+  constructor(private service: UserService) {}
+
+  @Get("/hello")
+  async sayHello(
+    @Query('name') name: string
+  ): Promise<string> {
+    return this.service.sayHello(name);
+  }
+
   @Post()
   post(): string {
     return "POST";
@@ -22,14 +32,6 @@ export class UserController {
   @Get("/sample")
   get(): string {
     return "GET";
-  }
-
-  @Get("/hello")
-  async sayHello(
-    @Query('first_name') firstName: string,
-    @Query('last_name') lastName: string
-  ): Promise<string> {
-    return `Hello ${firstName} ${lastName}`;
   }
 
   @Get('/response-json')
