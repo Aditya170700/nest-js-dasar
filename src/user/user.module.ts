@@ -4,6 +4,7 @@ import { UserService } from './user.service';
 import { Connection, MongoDBConnection, MySQLConnection } from './connection/connection';
 import { mailService, MailService } from './mail/mail.service';
 import { createUserRepository, UserRepository } from './user-repository/user-repository';
+import { MemberService } from './member/member.service';
 import * as process from 'node:process';
 
 @Module({
@@ -28,7 +29,8 @@ import * as process from 'node:process';
     {
       provide: 'EmailService',
       useExisting: MailService,
-    }
+    },
+    MemberService
   ]
 })
 export class UserModule {}
