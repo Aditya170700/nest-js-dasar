@@ -17,6 +17,7 @@ import { MailService } from './mail/mail.service';
 import { UserRepository } from './user-repository/user-repository';
 import { MemberService } from './member/member.service';
 import { ConfigService } from '@nestjs/config';
+import { User } from '@prisma/client';
 
 @Controller('/api/users')
 export class UserController {
@@ -33,12 +34,19 @@ export class UserController {
   @Get("/connection")
   async getConnection(): Promise<string> {
     this.mailService.send();
-    this.userRepository.save();
     this.emailService.send();
     console.log(this.memberService.getConnectionName());
     this.memberService.sendEmail();
     console.log(this.configService.get('APP_NAME'));
     return this.connection.getName();
+  }
+
+  @Get("/create")
+  async create(
+    @Query('first_name') firstName: string,
+    @Query('last_name') lastName: string,
+  ): Promise<User> {
+    return await this.userRepository.save(firstName, lastName);
   }
 
   @Get("/hello")
