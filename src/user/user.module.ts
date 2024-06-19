@@ -3,6 +3,7 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { Connection, MongoDBConnection, MySQLConnection } from './connection/connection';
 import { mailService, MailService } from './mail/mail.service';
+import { createUserRepository, UserRepository } from './user-repository/user-repository';
 import * as process from 'node:process';
 
 @Module({
@@ -18,6 +19,11 @@ import * as process from 'node:process';
     {
       provide: MailService,
       useValue: mailService,
+    },
+    {
+      provide: UserRepository,
+      useFactory: createUserRepository,
+      inject: [Connection],
     },
   ]
 })
