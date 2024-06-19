@@ -25,6 +25,10 @@ import * as process from 'node:process';
       useFactory: createUserRepository,
       inject: [Connection],
     },
+    {
+      provide: 'EmailService',
+      useExisting: MailService,
+    }
   ]
 })
 export class UserModule {}

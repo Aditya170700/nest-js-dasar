@@ -8,7 +8,7 @@ import {
   HttpCode,
   Redirect,
   HttpRedirectResponse,
-  Res, Req,
+  Res, Req, Inject,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { UserService } from './user.service';
@@ -23,12 +23,14 @@ export class UserController {
     private connection: Connection,
     private mailService: MailService,
     private userRepository: UserRepository,
+    @Inject('EmailService') private emailService: MailService,
   ) {}
 
   @Get("/connection")
   async getConnection(): Promise<string> {
     this.mailService.send();
     this.userRepository.save();
+    this.emailService.send();
     return this.connection.getName();
   }
 
