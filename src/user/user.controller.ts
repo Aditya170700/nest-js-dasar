@@ -22,6 +22,7 @@ import { ValidationFilter } from '../validation/validation.filter';
 import { LoginUserRequest, loginUserRequestValidation } from '../model/login-model';
 import { ValidationPipe } from '../validation/validation.pipe';
 import { TimeInterceptor } from '../time/time.interceptor';
+import { Auth } from '../auth/auth.decorator';
 
 @Controller('/api/users')
 export class UserController {
@@ -34,6 +35,13 @@ export class UserController {
     private memberService: MemberService,
     private configService: ConfigService,
   ) {}
+
+  @Get('/current')
+  current(@Auth() user: User): any {
+    return {
+      data: `Hello ${user.first_name}`,
+    }
+  }
 
   @Post('/login')
   @UseFilters(ValidationFilter)
