@@ -8,7 +8,7 @@ import {
   HttpCode,
   Redirect,
   HttpRedirectResponse,
-  Res, Req, Inject,
+  Res, Req, Inject, UseFilters,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { UserService } from './user.service';
@@ -18,6 +18,7 @@ import { UserRepository } from './user-repository/user-repository';
 import { MemberService } from './member/member.service';
 import { ConfigService } from '@nestjs/config';
 import { User } from '@prisma/client';
+import { ValidationFilter } from '../validation/validation.filter';
 
 @Controller('/api/users')
 export class UserController {
@@ -50,6 +51,7 @@ export class UserController {
   }
 
   @Get("/hello")
+  @UseFilters(ValidationFilter)
   async sayHello(
     @Query('name') name: string
   ): Promise<string> {
