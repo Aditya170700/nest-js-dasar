@@ -8,7 +8,7 @@ import {
   HttpCode,
   Redirect,
   HttpRedirectResponse,
-  Res, Req, Inject, UseFilters,
+  Res, Req, Inject, UseFilters, HttpException,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { UserService } from './user.service';
@@ -47,6 +47,12 @@ export class UserController {
     @Query('first_name') firstName: string,
     @Query('last_name') lastName: string,
   ): Promise<User> {
+    if (!firstName) {
+      throw new HttpException({
+        code: 400,
+        errors: 'firstName is required',
+      }, 400);
+    }
     return await this.userRepository.save(firstName, lastName);
   }
 
