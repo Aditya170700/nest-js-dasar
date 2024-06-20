@@ -27,7 +27,6 @@ import { RoleGuard } from '../role/role.guard';
 import { Roles } from '../role/role.decorator';
 
 @Controller('/api/users')
-@UseGuards(RoleGuard)
 export class UserController {
   constructor(
     private service: UserService,
