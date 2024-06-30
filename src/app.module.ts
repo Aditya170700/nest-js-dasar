@@ -11,6 +11,7 @@ import { LogMiddleware } from './log/log.middleware';
 import { AuthMiddleware } from './auth/auth.middleware';
 import { APP_GUARD } from '@nestjs/core';
 import { RoleGuard } from './role/role.guard';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { RoleGuard } from './role/role.guard';
     }),
     PrismaModule,
     ValidationModule.forRoot(true),
+    OrdersModule,
   ],
   controllers: [AppController],
   providers: [
